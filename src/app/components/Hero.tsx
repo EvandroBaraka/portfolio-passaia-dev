@@ -132,7 +132,7 @@ export default function Hero() {
             className="flex gap-10"
           >
             <a
-              href="https://github.com"
+              href="https://github.com/EvandroBaraka"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-cyan-400 transition-colors hover:scale-110 transform duration-200"
@@ -140,7 +140,7 @@ export default function Hero() {
               <Github size={24} />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/evandro-passaia-62b9a5269/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-cyan-400 transition-colors hover:scale-110 transform duration-200"
