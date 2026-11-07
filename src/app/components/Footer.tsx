@@ -23,7 +23,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-950 border-t border-gray-800/80">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 md:pb-16">
         <div className="grid md:grid-cols-3 gap-10 mb-10">
           {/* Left: Logo and description */}
           <div>
@@ -83,9 +83,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom: Copyright */}
-        <div className="pt-8 border-t border-gray-800/80 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <div className="pt-8 border-t border-gray-800/80 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 md:pr-20">
           <p>© {new Date().getFullYear()} Evandro Passaia. Todos os direitos reservados.</p>
-          <p className="flex items-center gap-1.5">
+          <p className="flex items-center gap-1.5 text-center md:text-right">
             Construído com <Heart size={14} className="text-rose-500 fill-current" /> em React, TypeScript &amp; Tailwind
           </p>
         </div>
