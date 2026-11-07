@@ -57,19 +57,29 @@ export default function Hero() {
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          {/* Profile Image */}
+          {/* Profile Image with Availability Badge */}
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="mb-8 relative"
           >
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-cyan-400 shadow-lg shadow-cyan-500/50">
-              <img
-                src={fotoPerfil}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
+            <div className="relative p-1 rounded-full bg-gradient-to-tr from-cyan-400 via-teal-300 to-purple-500 shadow-xl shadow-cyan-500/20">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-gray-950 bg-gray-900">
+                <img
+                  src={fotoPerfil}
+                  alt="Foto de perfil de Evandro Passaia"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            {/* Live badge */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full bg-gray-950/90 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-2 shadow-lg shadow-black/50">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span>Disponível para projetos</span>
             </div>
           </motion.div>
 
@@ -78,9 +88,9 @@ export default function Hero() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-cyan-400 mb-4"
+            className="text-cyan-400 mb-3 font-mono text-xs md:text-sm tracking-wider uppercase inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30"
           >
-            Olá, meu nome é
+            <span>👋 Olá, meu nome é</span>
           </motion.p>
 
           {/* Name */}

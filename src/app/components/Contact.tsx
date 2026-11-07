@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef, useState } from "react";
-import { Mail, MapPin, Phone, Send, Github, Linkedin, MessageCircle, Copy, Check, Loader2 } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Github, Linkedin, MessageCircle, Copy, Check, Loader2, Terminal } from "lucide-react";
 
 export default function Contact() {
     const ref = useRef(null);
@@ -163,19 +163,23 @@ export default function Contact() {
                 ref={ref}
             >
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4">
-                        <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                            Entre em Contato
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-4 tracking-wider uppercase">
+                        <Terminal size={14} />
+                        <span>// 04. VAMOS CONVERSAR</span>
+                    </div>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+                        Entre em{' '}
+                        <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">
+                            Contato
                         </span>
                     </h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto mb-4"></div>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Tem algum projeto em mente? Vamos conversar!
+                    <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                        Tem um projeto em mente, busca um desenvolvedor ou quer trocar uma ideia? Minha caixa de entrada está sempre aberta.
                     </p>
                 </motion.div>
 
