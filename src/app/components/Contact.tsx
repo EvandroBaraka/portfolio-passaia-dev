@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef, useState } from "react";
-import { Mail, MapPin, Phone, Send, Github, Linkedin } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Github, Linkedin, MessageCircle, Copy, Check, Loader2 } from "lucide-react";
 
 export default function Contact() {
     const ref = useRef(null);
@@ -22,6 +22,13 @@ export default function Contact() {
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState("");
+    const [copiedEmail, setCopiedEmail] = useState(false);
+
+    const copyEmail = () => {
+        navigator.clipboard.writeText("evandropassaia@gmail.com");
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2500);
+    };
 
     const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -194,31 +201,70 @@ export default function Contact() {
                                     key={item.label}
                                     className="flex items-start gap-4"
                                 >
-                                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md shadow-cyan-500/10">
                                         <item.icon
                                             size={20}
                                             className="text-white"
                                         />
                                     </div>
-                                    <div>
+                                    <div className="flex-1">
                                         <p className="text-gray-500 text-sm mb-1">
                                             {item.label}
                                         </p>
-                                        {item.href ? (
-                                            <a
-                                                href={item.href}
-                                                className="text-white hover:text-cyan-400 transition-colors"
-                                            >
-                                                {item.value}
-                                            </a>
-                                        ) : (
-                                            <p className="text-white">
-                                                {item.value}
-                                            </p>
-                                        )}
+                                        <div className="flex items-center gap-2">
+                                            {item.href ? (
+                                                <a
+                                                    href={item.href}
+                                                    className="text-white hover:text-cyan-400 transition-colors"
+                                                >
+                                                    {item.value}
+                                                </a>
+                                            ) : (
+                                                <p className="text-white">
+                                                    {item.value}
+                                                </p>
+                                            )}
+
+                                            {item.label === "Email" && (
+                                                <button
+                                                    type="button"
+                                                    onClick={copyEmail}
+                                                    className="p-1.5 text-gray-400 hover:text-cyan-400 transition-colors rounded hover:bg-gray-800 flex items-center gap-1 text-xs cursor-pointer"
+                                                    title="Copiar e-mail"
+                                                    aria-label="Copiar endereço de e-mail"
+                                                >
+                                                    {copiedEmail ? (
+                                                        <>
+                                                            <Check size={14} className="text-emerald-400" />
+                                                            <span className="text-emerald-400 text-xs font-mono">Copiado!</span>
+                                                        </>
+                                                    ) : (
+                                                        <Copy size={14} />
+                                                    )}
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
+                        </div>
+
+                        {/* WhatsApp Fast CTA */}
+                        <div className="mb-8">
+                            <a
+                                href="https://wa.me/5551984913647?text=Ol%C3%A1%20Evandro,%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar!"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300 group"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                                    <MessageCircle size={24} className="text-emerald-400" />
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-0.5">Resposta Rápida</p>
+                                    <p className="text-white font-medium text-sm group-hover:text-emerald-300 transition-colors">Conversar no WhatsApp</p>
+                                </div>
+                            </a>
                         </div>
 
                         {/* Social Links */}
@@ -362,14 +408,19 @@ export default function Contact() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-white"
+                                className="w-full px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-white font-medium cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                             >
-                                <Send size={20} />
-                                <span>
-                                    {isSubmitting
-                                        ? "Enviando..."
-                                        : "Enviar Mensagem"}
-                                </span>
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader2 size={20} className="animate-spin" />
+                                        <span>Enviando Mensagem...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Send size={20} />
+                                        <span>Enviar Mensagem</span>
+                                    </>
+                                )}
                             </button>
 
                             {submitError && (

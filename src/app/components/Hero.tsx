@@ -5,26 +5,44 @@ import ParticleBackground from './ParticleBackground';
 const fotoPerfil = new URL('../../assets/foto_perfil.jpg', import.meta.url).href;
 
 export default function Hero() {
+  const titles = [
+    'Desenvolvedor Web Full-Stack',
+    'Especialista React & TypeScript',
+    'Node.js & Arquitetura de APIs',
+    'Interfaces Modernas & UI/UX',
+  ];
+  const [titleIndex, setTitleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
-  const fullText = 'Desenvolvedor Web Full-Stack';
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Typewriter effect
+  // Typewriter effect com ciclo contínuo
   useEffect(() => {
-    if (currentIndex < fullText.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + fullText[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 100);
-      return () => clearTimeout(timeout);
+    const currentFull = titles[titleIndex];
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting) {
+      if (displayText.length < currentFull.length) {
+        timer = setTimeout(() => {
+          setDisplayText(currentFull.slice(0, displayText.length + 1));
+        }, 75);
+      } else {
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2200);
+      }
     } else {
-      const timeout = setTimeout(() => {
-        setDisplayText('');
-        setCurrentIndex(0);
-      }, 3000); // Wait for 3 seconds before restarting
-      return () => clearTimeout(timeout);
+      if (displayText.length > 0) {
+        timer = setTimeout(() => {
+          setDisplayText(currentFull.slice(0, displayText.length - 1));
+        }, 35);
+      } else {
+        setIsDeleting(false);
+        setTitleIndex((prev) => (prev + 1) % titles.length);
+      }
     }
-  }, [currentIndex]);
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, titleIndex]);
 
   const scrollToContact = () => {
     const element = document.getElementById('contact');
@@ -80,11 +98,12 @@ export default function Hero() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="text-xl md:text-3xl text-gray-300 mb-6 h-12 md:h-16 flex items-center"
+            className="text-xl md:text-3xl text-gray-300 mb-6 min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center"
+            aria-live="polite"
           >
-            <span className="inline-block min-w-[300px] md:min-w-[400px]">
-              {displayText}
-              <span className="inline-block w-0.5 h-6 md:h-8 bg-cyan-400 ml-1 animate-pulse"></span>
+            <span className="inline-flex items-center text-center">
+              <span>{displayText}</span>
+              <span className="inline-block w-0.5 h-6 md:h-8 bg-cyan-400 ml-1.5 animate-pulse" aria-hidden="true"></span>
             </span>
           </motion.div>
 
@@ -107,12 +126,12 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4 mb-12"
           >
             <a 
-              href="https://drive.google.com/file/d/18Wc6mlhve-A9L56SUg22CyJ8u1hV5D6j/view?usp=drive_link"
-              download='Evandro_Passaia_CV.pdf'
+              href="https://drive.google.com/uc?export=download&id=18Wc6mlhve-A9L56SUg22CyJ8u1hV5D6j"
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2" >
-              <Download size={20} />
+              className="group px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-white font-medium cursor-pointer"
+            >
+              <Download size={20} className="group-hover:-translate-y-0.5 transition-transform" />
               <span>Download CV</span>
             </a>
             <button
@@ -158,13 +177,22 @@ export default function Hero() {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
-        <div className="w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center">
+        <button
+          onClick={() => {
+            const element = document.getElementById('about');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="w-6 h-10 border-2 border-cyan-400/80 hover:border-cyan-400 rounded-full flex justify-center cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400 group"
+          aria-label="Rolar para a seção Sobre Mim"
+        >
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2"
+            className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 group-hover:bg-cyan-300"
           ></motion.div>
-        </div>
+        </button>
       </motion.div>
     </section>
   );
