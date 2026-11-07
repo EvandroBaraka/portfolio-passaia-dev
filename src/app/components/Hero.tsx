@@ -18,7 +18,7 @@ export default function Hero() {
   // Typewriter effect com ciclo contínuo
   useEffect(() => {
     const currentFull = titles[titleIndex];
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
 
     if (!isDeleting) {
       if (displayText.length < currentFull.length) {
@@ -52,7 +52,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-20 md:pt-36 md:pb-24">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10 pb-20 md:pt-17 md:pb-24">
       <ParticleBackground />
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,7 +185,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-24 left-1/2 transform -translate-x-1/2"
       >
         <button
           onClick={() => {
